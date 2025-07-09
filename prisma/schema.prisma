@@ -13,3 +13,11 @@ model SuperAdmin {
   password  String
   createdAt DateTime @default(now())
 }
+
+model Restaurants {
+  id            Int      @id @default(autoincrement())
+  nombre        String
+  propietario   String
+  direccion     String?
+  creadoEn      DateTime @default(now())
+}
