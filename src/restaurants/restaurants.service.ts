@@ -1,17 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateRestaurantDto } from './dto/create-restaurant.dto';
+import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 
 @Injectable()
 export class RestaurantsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateRestaurantDto) {
-    return this.prisma.restaurants.create({ data });
+    const cleanData = {
+      nombre: data.nombre.trim(),
+      propietario: data.propietario.trim(),
+      direccion: data.direccion?.trim(),
+    };
+
+    const existing = await this.prisma.restaurants.findFirst({
+      where: {
+        nombre: cleanData.nombre,
+      },
+    });
+
+    if (existing) {
+      throw new Error('Ya existe un restaurante con ese nombre');
+    }
+
+    return this.prisma.restaurants.create({ data: cleanData });
   }
 
-  async findAll() {
+  findAll() {
     return this.prisma.restaurants.findMany();
   }
-}
 
+  update(id: number, data: UpdateRestaurantDto) {
+    return this.prisma.restaurants.update({
+      where: { id },
+      data,
+    });
+  }
+
+  delete(id: number) {
+    return this.prisma.restaurants.delete({
+      where: { id },
+    });
+  }
+}
