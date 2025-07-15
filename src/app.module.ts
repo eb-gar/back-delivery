@@ -5,9 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, RestaurantsModule],
+  imports: [AuthModule, PrismaModule, RestaurantsModule, CloudinaryModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

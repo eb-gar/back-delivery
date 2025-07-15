@@ -12,6 +12,8 @@ export class RestaurantsService {
       nombre: data.nombre.trim(),
       propietario: data.propietario.trim(),
       direccion: data.direccion?.trim(),
+      primaryColor: data.primaryColor || '#3880ff',
+      secondaryColor: data.secondaryColor || '#3dc2ff',
     };
 
     const existing = await this.prisma.restaurants.findFirst({
@@ -29,6 +31,10 @@ export class RestaurantsService {
 
   findAll() {
     return this.prisma.restaurants.findMany();
+  }
+
+  findOne(id: number) {
+    return this.prisma.restaurants.findUnique({ where: { id } });
   }
 
   update(id: number, data: UpdateRestaurantDto) {

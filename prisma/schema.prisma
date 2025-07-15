@@ -19,5 +19,8 @@ model Restaurants {
   nombre        String
   propietario   String
   direccion     String?
-  creadoEn      DateTime @default(now())
+  logoUrl        String?   
+  primaryColor   String    @default("#3880ff")
+  secondaryColor String    @default("#3dc2ff")
+  creadoAt      DateTime @default(now())
 }
