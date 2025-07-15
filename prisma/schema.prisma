@@ -23,4 +23,14 @@ model Restaurants {
   primaryColor   String    @default("#3880ff")
   secondaryColor String    @default("#3dc2ff")
   creadoAt      DateTime @default(now())
+
+  RestaurantAdmin RestaurantAdmin[]
+}
+
+model RestaurantAdmin {
+  id           Int         @id @default(autoincrement())
+  email        String      @unique
+  password     String
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
 }
