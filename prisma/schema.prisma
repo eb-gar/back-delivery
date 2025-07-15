@@ -25,6 +25,8 @@ model Restaurants {
   creadoAt      DateTime @default(now())
 
   RestaurantAdmin RestaurantAdmin[]
+
+  Dish Dish[]
 }
 
 model RestaurantAdmin {
@@ -32,5 +34,16 @@ model RestaurantAdmin {
   email        String      @unique
   password     String
   restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+}
+
+model Dish {
+  id           Int          @id @default(autoincrement())
+  name         String
+  description  String?
+  price        Float
+  imageUrl     String?
+  createdAt    DateTime     @default(now())
+  restaurant   Restaurants  @relation(fields: [restaurantId], references: [id])
   restaurantId Int
 }
