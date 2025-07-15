@@ -27,6 +27,8 @@ model Restaurants {
   RestaurantAdmin RestaurantAdmin[]
 
   Dish Dish[]
+
+  Order Order[]
 }
 
 model RestaurantAdmin {
@@ -43,6 +45,16 @@ model Dish {
   description  String?
   price        Float
   imageUrl     String?
+  createdAt    DateTime     @default(now())
+  restaurant   Restaurants  @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+}
+
+model Order {
+  id           Int          @id @default(autoincrement())
+  cliente      String
+  total        Float
+  estado       String       @default("pendiente")
   createdAt    DateTime     @default(now())
   restaurant   Restaurants  @relation(fields: [restaurantId], references: [id])
   restaurantId Int

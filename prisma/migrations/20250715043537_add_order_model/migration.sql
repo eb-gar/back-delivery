@@ -32,6 +32,31 @@ CREATE TABLE "RestaurantAdmin" (
     CONSTRAINT "RestaurantAdmin_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Dish" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "price" DOUBLE PRECISION NOT NULL,
+    "imageUrl" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "restaurantId" INTEGER NOT NULL,
+
+    CONSTRAINT "Dish_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" SERIAL NOT NULL,
+    "cliente" TEXT NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
+    "estado" TEXT NOT NULL DEFAULT 'pendiente',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "restaurantId" INTEGER NOT NULL,
+
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "SuperAdmin_email_key" ON "SuperAdmin"("email");
 
@@ -40,3 +65,9 @@ CREATE UNIQUE INDEX "RestaurantAdmin_email_key" ON "RestaurantAdmin"("email");
 
 -- AddForeignKey
 ALTER TABLE "RestaurantAdmin" ADD CONSTRAINT "RestaurantAdmin_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "Restaurants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Dish" ADD CONSTRAINT "Dish_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "Restaurants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "Restaurants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
