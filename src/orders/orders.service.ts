@@ -8,7 +8,15 @@ export class OrdersService {
   constructor(private prisma: PrismaService) {}
 
   create(data: CreateOrderDto) {
-    return this.prisma.order.create({ data });
+    const { clientId, restaurantId, ...rest } = data;
+
+    return this.prisma.order.create({
+      data: {
+        ...rest,
+        client: { connect: { id: clientId } },
+        restaurant: { connect: { id: restaurantId } },
+      },
+    });
   }
 
   findByRestaurant(restaurantId: number) {

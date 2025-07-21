@@ -29,6 +29,8 @@ model Restaurants {
   Dish Dish[]
 
   Order Order[]
+
+  Client Client[]
 }
 
 model RestaurantAdmin {
@@ -51,11 +53,22 @@ model Dish {
 }
 
 model Order {
-  id           Int          @id @default(autoincrement())
-  cliente      String
+  id           Int      @id @default(autoincrement())
   total        Float
-  estado       String       @default("pendiente")
-  createdAt    DateTime     @default(now())
-  restaurant   Restaurants  @relation(fields: [restaurantId], references: [id])
+  estado       String   @default("pendiente")
+  createdAt    DateTime @default(now())
   restaurantId Int
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  clientId     Int
+  client       Client @relation(fields: [clientId], references: [id])
+}
+
+model Client {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  password     String
+  restaurantId Int
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  orders       Order[]
 }
