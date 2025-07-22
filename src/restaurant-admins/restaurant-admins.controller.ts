@@ -19,4 +19,14 @@ export class RestaurantAdminsController {
   ) {
     return this.service.login(dto);
   }
+
+ @Post('register-client')
+registerClient(
+  @Body(new ValidationPipe()) dto: { email: string; password: string; name: string }
+) {
+  return this.service.registerClient(dto);
+}
+
+
+
 }
