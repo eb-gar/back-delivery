@@ -27,8 +27,6 @@ model Restaurants {
   RestaurantAdmin RestaurantAdmin[]
 
   Dish Dish[]
-
-  Order Order[]
 }
 
 model RestaurantAdmin {
@@ -51,14 +49,21 @@ model Dish {
 }
 
 model Order {
-  id           Int          @id @default(autoincrement())
-  client  Client? @relation(fields: [clientId], references: [id])
-  clientId Int?
-  total        Float
-  estado       String       @default("pendiente")
-  createdAt    DateTime     @default(now())
-  restaurant   Restaurants  @relation(fields: [restaurantId], references: [id])
-  restaurantId Int
+  id           String      @id @default(uuid())
+  customerName String
+  address      String
+  status       OrderStatus
+  createdAt    DateTime    @default(now())
+  motorizedId  String?
+  motorized    Motorized?  @relation(fields: [motorizedId], references: [id])
+
+  Client Client[]
+}
+
+enum OrderStatus {
+  PENDING
+  ASSIGNED
+  DELIVERED
 }
 
 model Client {
@@ -68,4 +73,14 @@ model Client {
   password     String
   orders       Order[]
   createdAt DateTime @default(now())
+}
+
+model Motorized {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String?
+  createdAt DateTime @default(now())
+  orders    Order[]
 }

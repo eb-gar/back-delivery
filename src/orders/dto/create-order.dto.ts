@@ -1,4 +1,5 @@
-import { IsNumber, IsString, IsArray } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNumber, IsString, IsArray, ValidateNested } from 'class-validator';
 
 export class CreateOrderDto {
   @IsNumber()
@@ -7,13 +8,22 @@ export class CreateOrderDto {
   @IsNumber()
   restaurantId: number;
 
-  @IsArray()
-  @IsString({ each: true })
-  items: string[];
+  @IsString()
+  estado: string;
 
   @IsNumber()
   total: number;
 
-  @IsString()
-  estado: string;
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => OrderItemDto)
+  items: OrderItemDto[];
+}
+
+export class OrderItemDto {
+  @IsNumber()
+  platoId: number;
+
+  @IsNumber()
+  cantidad: number;
 }

@@ -9,9 +9,10 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { RestaurantAdminsModule } from './restaurant-admins/restaurant-admins.module';
 import { DishesModule } from './dishes/dishes.module';
 import { OrdersModule } from './orders/orders.module';
+import { MotorizedModule } from './motorized/motorized.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, RestaurantsModule, CloudinaryModule, RestaurantAdminsModule, DishesModule, OrdersModule],
+  imports: [AuthModule, PrismaModule, RestaurantsModule, CloudinaryModule, RestaurantAdminsModule, DishesModule, OrdersModule, MotorizedModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
